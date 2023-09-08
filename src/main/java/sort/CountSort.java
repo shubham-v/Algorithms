@@ -1,6 +1,33 @@
 package sort;
 
+import java.util.Arrays;
+
 // Time : O(n + k) θ(n + k) Ω(n + k)
 // Space: O(k)
 public class CountSort {
+
+    void sort(int[] A) {
+        int min = A[0], max = A[0];
+        for (int i = 0; i < A.length; i++) {
+            min = Math.min(A[i], min);
+            max = Math.max(A[i], max);
+        }
+
+        int[] b = new int[max-min+1];
+
+        for (int a : A)
+            b[a - min]++;
+
+        int ai = 0;
+        for (int i = 0; i < b.length; i++)
+            while (b[i]-- > 0)
+                A[ai++] = i + min;
+    }
+
+    public static void main(String[] args) {
+        int[] A = new int[] {-1, 1, 5, 2, 1, 3, -1000, 0, 10, 100, 1000, 101, 110};
+        new CountSort().sort(A);
+        Arrays.stream(A).forEach(e -> System.out.print(e + " "));
+    }
+
 }
