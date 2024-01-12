@@ -1,6 +1,7 @@
 package graph;
 
 import java.util.Arrays;
+import java.util.PriorityQueue;
 
 public class Krusukal {
 
@@ -12,7 +13,28 @@ public class Krusukal {
         return uf.weight;
     }
 
-    private static class UF {
+    int minCostConnectPoints(int[][] points) {
+        int n = points.length;
+        PriorityQueue<int[]> pq = new PriorityQueue<>((x, y) -> x[0] - y[0]);
+
+        for (int i = 0; i < n; i++)
+            for (int j = i + 1; j < n; j++)
+                pq.add(new int[] {dist(points[i], points[j]), i, j});
+
+        UF uf = new UF(n);
+        while (!pq.isEmpty()) {
+            int[] next = pq.poll();
+            uf.union(next[1], next[2], next[0]);
+        }
+
+        return uf.weight;
+    }
+
+    int dist(int[] a, int[] b) {
+        return Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]);
+    }
+
+    class UF {
         int[] parent, size;
         int maxSize = 1;
 

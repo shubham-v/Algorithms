@@ -6,21 +6,21 @@ import java.util.Arrays;
 // Space: O(k)
 public class CountSort {
 
-    void sort(int[] A) {
-        int min = A[0], max = A[0];
-        for (int i = 0; i < A.length; i++) {
+    public void sort(int[] A) {
+        int min = A[0], max = A[0], i;
+        for (i = 1; i < A.length; ++i) {
             min = Math.min(A[i], min);
             max = Math.max(A[i], max);
         }
 
-        int[] b = new int[max-min+1];
+        int[] f = new int[max - min + 1];
 
         for (int a : A)
-            b[a - min]++;
+            f[a - min]++;
 
         int ai = 0;
-        for (int i = 0; i < b.length; i++)
-            while (b[i]-- > 0)
+        for (i = 0; i < f.length; ++i)
+            while (f[i]-- > 0)
                 A[ai++] = i + min;
     }
 
